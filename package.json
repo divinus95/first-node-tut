@@ -1,0 +1,31 @@
+{
+  "name": "first-node-tut",
+  "version": "1.0.0",
+  "description": "first node.js proj",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/divinus95/first-node-tut.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express"
+  ],
+  "author": "Kwarteng Isaac Divinus",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/divinus95/first-node-tut/issues"
+  },
+  "homepage": "https://github.com/divinus95/first-node-tut#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
