@@ -11,6 +11,19 @@ app.use(morgan('dev'));//logs
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+//enable cors
+app.use((req, res, next)=> {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 
+                'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+                if(req.method === 'OPTIONS'){
+                    //browsers send options requests first when the method is post or put
+                    res.header('Access-Control-Allow-Methods', 'PUT, PATCH, POST, DELETE, GET');
+                    return res.status(200).json({})
+                }
+})
+
+//Routes which handle our requests
 app.use('/orders', orderRoutes);
 app.use('/products', productRoutes);
 
