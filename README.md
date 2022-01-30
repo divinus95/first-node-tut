@@ -8,3 +8,5 @@ now use: npm start
 
 //setup log
 npm install --save morgan
+
+//we want to extract request body -- npm install --save body-parser

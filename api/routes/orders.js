@@ -10,8 +10,13 @@ router.get('/', (req, res, next)=> {
 });
 
 router.post('/', (req, res, next)=> {
+    const order = {
+        orderId: req.body.orderId,
+        totalCost: req.body.totalCost
+    }
     res.status(200).json({
-        message: "Handling POST requests at /orders"
+        message: "Handling POST requests at /orders",
+        createdOrder: tot
     }) 
  });
 
