@@ -22,7 +22,9 @@
   },
   "homepage": "https://github.com/divinus95/first-node-tut#readme",
   "dependencies": {
+    "body-parser": "^1.19.1",
     "express": "^4.17.2",
+    "mongoose": "^6.1.8",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
