@@ -1,11 +1,20 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const morgan = require('morgan');
 
 const orderRoutes = require('./api/routes/orders');
 const productRoutes = require('./api/routes/products');
+
+mongoose.connect("mongodb+srv://divinus:" +
+    process.env.MONGO_ATLAS_PW +
+    "@cluster0.feacr.mongodb.net/node-js-tut-shop-db?retryWrites=true&w=majority", 
+    {
+    //useMongoClient: true
+    }
+);
 
 app.use(morgan('dev'));//logs
 app.use(bodyParser.urlencoded({extended: false}));
@@ -21,6 +30,7 @@ app.use((req, res, next)=> {
                     res.header('Access-Control-Allow-Methods', 'PUT, PATCH, POST, DELETE, GET');
                     return res.status(200).json({})
                 }
+                next(); /// other routes should work
 })
 
 //Routes which handle our requests
