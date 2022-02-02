@@ -8,13 +8,16 @@ const morgan = require('morgan');
 const orderRoutes = require('./api/routes/orders');
 const productRoutes = require('./api/routes/products');
 
-mongoose.connect("mongodb+srv://divinus:" +
-    process.env.MONGO_ATLAS_PW +
-    "@cluster0.feacr.mongodb.net/node-js-tut-shop-db?retryWrites=true&w=majority", 
-    {
-    //useMongoClient: true
-    }
-);
+// mongoose.connect("mongodb+srv://divinus:" +
+//     process.env.MONGO_ATLAS_PW +
+//     "@cluster0.feacr.mongodb.net/node-js-tut-shop-db?retryWrites=true&w=majority", 
+//     {
+//     //useMongoClient: true
+//     }
+// );
+//mongoose.Promise = global.Promise;
+mongoose.connect("mongodb://127.0.0.1:27017/node-tut?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.1.9");
+mongoose.Promise = global.Promise;
 
 app.use(morgan('dev'));//logs
 app.use(bodyParser.urlencoded({extended: false}));

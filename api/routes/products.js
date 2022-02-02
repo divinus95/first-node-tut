@@ -7,10 +7,25 @@ const Product = require('../models/product');
 
 router.get('/', (req, res, next) => {
     Product.find()
+    .select('name price _id')
             .exec()
-            .then(product => {
-                if(product){
-                    res.status(200).json({product})
+            .then(products => {
+                const response = {
+                    count: products.length,
+                    products: products.map(product => {
+                        return {
+                            name: product.name,
+                            price: product.price,
+                            _id: product._id,
+                            request: {
+                                type: 'GET',
+                                url: "http://localhost:3000/products/" + product._id
+                            }
+                        }
+                    })
+                }
+                if(products){
+                    res.status(200).json(response)
                 }else{
                     res.status(404).json({message: "No products found"})
                 }
@@ -36,11 +51,16 @@ router.post('/', (req, res, next) => {
 router.get('/:productId', (req, res, next) => {
     const Id = req.params.productId;
     Product.findById(Id)
+            .select('name price _id')
             .exec()
             .then(prod => {
-                console.log(prod);
-                if(prod){
-                    res.status(200).json({prod})
+                const response = {
+                    count: prod.length,
+                    products: prod
+                }
+
+                if(response){
+                    res.status(200).json(response)
                 }else{
                     res.status(404).json({message: "No data found"})
                 }
@@ -66,7 +86,6 @@ router.patch('/:productId', (req, res, next) => {
             })
             .catch(err => {
                 res.status(500).json({error: err})
-          
             })
 })
 router.delete('/:productId', (req, res, next) => {
