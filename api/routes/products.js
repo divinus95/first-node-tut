@@ -1,9 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const multer = require('multer');
+
+const upload = multer({dest: 'uploads/'}) //we want to customize it below
+// const path = require("path");
+// const storage = multer.diskStorage({
+//     destination: function(req, file, cb){
+//         cb(null, path.resolve(__dirname, `..${path.sep}..${path.sep}`, `${path.sep}utils${path.sep}uploads`));
+//     },
+//     filename: function(req, file, cb){
+//         cb(null, new Date().toISOString() + file.originalname)
+//     }
+// });
+// const upload = multer({storage: storage});
 
 //import model
 const Product = require('../models/product');
+
+
 
 router.get('/', (req, res, next) => {
     Product.find()
@@ -36,7 +51,8 @@ router.get('/', (req, res, next) => {
             });
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', upload.single('productImage'), (req, res, next) => {
+    console.log(req.file)
     const product = new Product({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,

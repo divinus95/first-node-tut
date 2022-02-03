@@ -7,6 +7,7 @@ const morgan = require('morgan');
 
 const orderRoutes = require('./api/routes/orders');
 const productRoutes = require('./api/routes/products');
+const userRoutes = require('./api/routes/users')
 
 // mongoose.connect("mongodb+srv://divinus:" +
 //     process.env.MONGO_ATLAS_PW +
@@ -39,6 +40,7 @@ app.use((req, res, next)=> {
 //Routes which handle our requests
 app.use('/orders', orderRoutes);
 app.use('/products', productRoutes);
+app.use('/users', userRoutes);
 
 //handle error
 app.use((req, res, next)=>{
