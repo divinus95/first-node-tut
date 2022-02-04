@@ -26,3 +26,6 @@ npm install --save multer
 we want to implement authentication
 use nodejs bcrypt
 npm install --save bcrypt
+
+add jwt
+npm install jsonwebtoken
