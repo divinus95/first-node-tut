@@ -1,4 +1,5 @@
-const express = require('express')
+const express = require('express');
+const { type } = require('express/lib/response');
 const router = express.Router();
 const mongoose = require('mongoose');
 
@@ -10,14 +11,25 @@ router.get('/', (req, res, next)=> {
           .select('_id totalCost quantity product')
           .populate('product', '_id name')
           .exec()
-          .then(result => {
+          .then(results => {
+              res.status(200).json({
+                  count: results.length,
+                  orders: results.map(result => {
+                    return  {
+                        _id: result._id,
+                        product: result.product,
+                        totalCost: result.totalCost,
+                        quantity : result.quantity,
+                        request: {
+                            type: "GET",
+                            url: "https://localhost:3000/order/" + result._id
+                        }
+                    }
+                  })
+              })
               console.log(result);
-              var response = {
-                  count: res.length,
-                  orders: result
-              }
+              
               if(response){
-                res.status(200).json(response)
             }else{
                 res.status(404).json({message: "No data found"})
             }

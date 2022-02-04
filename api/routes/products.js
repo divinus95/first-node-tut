@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const multer = require("multer");
-
 const upload = multer({ dest: "uploads/" }); //we want to customize it below
 // const path = require("path");
 // const storage = multer.diskStorage({
@@ -17,39 +16,11 @@ const upload = multer({ dest: "uploads/" }); //we want to customize it below
 
 //import model
 const Product = require("../models/product");
+const checkAuth = require("../middleware/check-auth");
+const productController = require("../controllers/products")
+router.get("/", productController.get_all_products);
 
-router.get("/", (req, res, next) => {
-  Product.find()
-    .select("name price _id")
-    .exec()
-    .then((products) => {
-      const response = {
-        count: products.length,
-        products: products.map((product) => {
-          return {
-            name: product.name,
-            price: product.price,
-            _id: product._id,
-            request: {
-              type: "GET",
-              url: "http://localhost:3000/products/" + product._id,
-            },
-          };
-        }),
-      };
-      if (products) {
-        res.status(200).json(response);
-      } else {
-        res.status(404).json({ message: "No products found" });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ error: err });
-    });
-});
-
-router.post("/", upload.single("productImage"), (req, res, next) => {
+router.post("/", checkAuth, upload.single("productImage"), (req, res, next) => {
   console.log(req.file);
   const product = new Product({
     _id: new mongoose.Types.ObjectId(),
